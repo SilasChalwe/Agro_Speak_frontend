@@ -157,8 +157,13 @@ const speakText = async (text, language = 'bemba') => {
 
   // AI Function
   const sendToAI = async (query) => {
-    const OPENROUTER_API_KEY = "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";
+    const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY;
     const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+
+    if (!OPENROUTER_API_KEY) {
+      console.error("OpenRouter API key is not configured");
+      return "Sorry, the AI service is not configured right now.";
+    }
 
     try {
       const response = await fetch(OPENROUTER_URL, {
